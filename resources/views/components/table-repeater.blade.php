@@ -127,16 +127,23 @@
                                             @class([
                                                 'table-repeater-column',
                                                 'p-2' => ! $streamlined,
-                                                'has-hidden-label' => $cell->isLabelHidden(),
-                                                match($headers[$counter++]->getAlignment()) {
-                                                  'center', Alignment::Center => 'text-center',
-                                                  'right', 'end', Alignment::Right, Alignment::End => 'text-end',
-                                                  default => 'text-start'
-                                                }
+                                                'has-hidden-label' => $cell->isLabelHidden()
                                             ])
                                             style="width: {{ $cell->getMaxWidth() ?? 'auto' }}"
                                         >
-                                            {{ $cell }}
+                                            <div
+                                                @class([
+                                                    'flex',
+                                                    match($headers[$counter++]->getAlignment()) {
+                                                        'center', Alignment::Center => 'justify-center text-center',
+                                                        'right', 'end', Alignment::Right, Alignment::End => 'justify-end text-right',
+                                                        'left', 'start', Alignment::Left, Alignment::Start => 'justify-start text-left',
+                                                        default => 'justify-start text-start'
+                                                    }
+                                                ])
+                                            >
+                                                {{ $cell }}
+                                            </div>
                                         </td>
                                     @endif
                                 @endforeach
